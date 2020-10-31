@@ -2,11 +2,11 @@ public class NQueenProblem {
 	private int N; 
 
     public NQueenProblem(int nSize){
-        if (nSize > 1){
+        if (nSize > 2){
             this.N = nSize;
         }
         else{
-            this.N = 2;
+            this.N = 3;
         }
     }
 
@@ -17,7 +17,8 @@ public class NQueenProblem {
 				System.out.print(" " + board[i][j] 
 								+ " "); 
 			System.out.println(); 
-		} 
+        } 
+        System.out.println(); 
 	} 
 
 	private boolean isSafe(int board[][], int row, int col) 
@@ -69,5 +70,31 @@ public class NQueenProblem {
 
 		printSolution(board); 
 		return true; 
+    } 
+ 
+	private boolean solveEveryNQUtil(int board[][], int col) 
+	{ 
+		if (col >= N) 
+			return true; 
+
+		for (int i = 0; i < N; i++) { 
+			if (isSafe(board, i, col)) { 
+				board[i][col] = 1; 
+
+				if (solveEveryNQUtil(board, col + 1) == true) 
+					printSolution(board); 
+
+				board[i][col] = 0; 
+			} 
+		} 
+
+		return false; 
+	} 
+    
+    public void solveEveryNQ() { 
+		int board[][] = new int[N][N]; 
+
+        solveEveryNQUtil(board, 0);
+			
 	} 
 } 
